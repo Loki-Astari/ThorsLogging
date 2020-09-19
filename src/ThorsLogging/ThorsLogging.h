@@ -1,6 +1,10 @@
 #ifndef THORS_ANVIL_LOGGING_THORS_LOGGING_H
 #define THORS_ANVIL_LOGGING_THORS_LOGGING_H
 
+#ifndef LOGURU_WITH_STREAMS
+#define LOGURU_WITH_STREAMS 1
+#endif
+
 #include "loguru.hpp"
 #include "ThorsIOUtil/Utility.h"
 #include <stdexcept>
@@ -9,7 +13,7 @@
 
 namespace ThorsAnvil::Logging
 {
-    class Critical: std::runtime_error
+    class CriticalException: std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -26,10 +30,10 @@ do                                                                      \
     LOG_F(Level, "%s", message.c_str());                                \
     throw Exception(message);                                           \
 }                                                                       \
-while(false)
+while (false)
 
 #define ThorsLogAndThrow(...)          ThorsLogAndThrowAction(2, std::runtime_error, __VA_ARGS__)
-#define ThorsLogAndThrowCrytical(...)  ThorsLogAndThrowAction(FATAL, ThorsAnvil::Logging::Critical, __VA_ARGS__)
+#define ThorsLogAndThrowCritical(...)  ThorsLogAndThrowAction(ERROR, ThorsAnvil::Logging::CriticalException, __VA_ARGS__)
 
 
 #endif
