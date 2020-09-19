@@ -12,7 +12,7 @@ AC_CONFIG_AUX_DIR([.build/autotools/build])
 AX_THOR_FUNC_BUILD
 
 
-AC_CONFIG_SRCDIR([src/ThorsLogging/ThorsLogging.cpp])
+AC_CONFIG_SRCDIR([src/ThorsLogging/ThorsLogging.h])
 
 # Find the C++ Copiler
 # The minimumm requirements.

@@ -595,7 +595,7 @@ PACKAGE_STRING='ThorsLogging 0.1'
 PACKAGE_BUGREPORT='YourName@Email.com'
 PACKAGE_URL=''
 
-ac_unique_file="src/ThorsLogging/ThorsLogging.cpp"
+ac_unique_file="src/ThorsLogging/ThorsLogging.h"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
