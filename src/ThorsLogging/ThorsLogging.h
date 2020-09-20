@@ -15,7 +15,7 @@ namespace ThorsAnvil::Logging
 {
     // This is for data/application corruption that requires the
     // application to immediately quit.
-    class FatalException: std::runtime_error
+    class FatalException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -31,7 +31,7 @@ namespace ThorsAnvil::Logging
     // Note: This does not mean there has been data corruptions so we
     //       can potentially continue. The application writer must
     //       make that determination.
-    class CriticalException: std::runtime_error
+    class CriticalException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -39,7 +39,7 @@ namespace ThorsAnvil::Logging
     // This is for situations where you don't want to happen
     // but is caused because the input data does not conform
     // to expect patterns.
-    class LogicalException: std::runtime_error
+    class LogicalException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -58,10 +58,14 @@ do                                                                      \
 }                                                                       \
 while (false)
 
+#define ThorsMessage(Level, ...)        VLOG_S(Level) << ThorsAnvil::Utility::buildErrorMessage(__VA_ARGS__)
+
 #define ThorsLogAndThrowFatal(...)      ThorsLogAndThrowAction(FATAL,   ThorsAnvil::Logging::FatalException, __VA_ARGS__)
 #define ThorsLogAndThrowCritical(...)   ThorsLogAndThrowAction(ERROR,   ThorsAnvil::Logging::CriticalException, __VA_ARGS__)
 #define ThorsLogAndThrowLogical(...)    ThorsLogAndThrowAction(WARNING, ThorsAnvil::Logging::LogicalException, __VA_ARGS__)
 #define ThorsLogAndThrow(...)           ThorsLogAndThrowAction(2, std::runtime_error, __VA_ARGS__)
 
+#define ThorsCatchMessage(S, F, e)      ThorsMessage(2, S, F, "Caught Exception: ", e)
+#define ThorsRethrowMessage(S, F, e)    ThorsMessage(2, S, F, "ReThrow Exception: ",e)
 
 #endif
