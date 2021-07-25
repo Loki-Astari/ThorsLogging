@@ -5931,8 +5931,10 @@ fi
     if test "x${with_hostbuild}" != "x"
 then :
 
+            echo "Using Existing Host Build Tools: ${with_hostbuild}"
             rm build
             ln -s ${with_hostbuild} build
+            ls -la build
 
 
 fi
