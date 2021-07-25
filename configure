@@ -5863,7 +5863,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-
+    subconfigure=""
     git submodule update --init --recursive
 
     # Check whether --enable-verapython2 was given.
@@ -5872,6 +5872,13 @@ then :
   enableval=$enable_verapython2;
 fi
 
+    if test "x$enable_verapython2" == "xyes"
+then :
+
+            subconfigure="${subconfigure} --enable-verapython2"
+
+
+fi
 
 
     # Check whether --enable-vera was given.
@@ -5882,12 +5889,11 @@ fi
 
 
     VERATOOL="";
-    subconfigvera=""
     if test "x$enable_vera" == "xno"
 then :
 
             VERATOOL='off';
-            subconfigvera="--disable-vera";
+            subconfigure="${subconfigure} --disable-vera";
 
 else $as_nop
 
@@ -5938,6 +5944,25 @@ then :
 
 
 fi
+
+
+    export cwd=$(pwd)
+
+    pushd third
+    if [ $? == 0 ]; then
+        for third in $(ls); do
+            pushd ${third}
+            echo "${third}:  ./configure ${subconfigure} --prefix=${prefix} --with-hostbuild=${cwd}/build"
+            ./configure ${subconfigure} --prefix=${prefix} --with-hostbuild=${cwd}/build
+            if [ $? != 0 ]; then
+                "Failed to configure: ${third}"
+                exit 1
+            fi
+            echo "================ DONE ================="
+            popd
+        done
+        popd
+    fi
 
 
     if test "x${with_hostbuild}" == "x"
