@@ -11,8 +11,11 @@
 #include <string>
 
 
-namespace ThorsAnvil::Logging
+namespace ThorsAnvil
 {
+    namespace Logging
+    {
+
     // This is for data/application corruption that requires the
     // application to immediately quit.
     class FatalException: public std::runtime_error
@@ -44,6 +47,8 @@ namespace ThorsAnvil::Logging
         public:
             using std::runtime_error::runtime_error;
     };
+
+    }
 }
 
 #define ThorsLogAndThrowAction(Level, Exception, Scope, Function, ...)  \
