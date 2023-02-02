@@ -10,7 +10,7 @@ release/
 profile/
 report/
 vera/
-dependency/
+makedependency/
 build
 
 makefile_tmp
