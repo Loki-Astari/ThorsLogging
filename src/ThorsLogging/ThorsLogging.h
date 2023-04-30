@@ -5,7 +5,19 @@
 #define LOGURU_WITH_STREAMS 1
 #endif
 
+#if defined(HEADER_ONLY) && HEADER_ONLY == 1
+// Don't use logru with header only
+#include <iostream>
+// FATAL:   2
+// ERROR:   3
+// WARNING: 4
+// INFO:    5
+#ifndef THOR_LOGGING_DEFAULT_LOG_LEVEL
+#define THOR_LOGGING_DEFAULT_LOG_LEVEL   3
+#endif
+#else
 #include "loguru.hpp"
+#endif
 #include "ThorsIOUtil/Utility.h"
 #include <stdexcept>
 #include <string>
@@ -51,6 +63,17 @@ namespace ThorsAnvil
     }
 }
 
+#if HEADER_ONLY
+#define ThorsLogAndThrowAction(Level, Exception, Scope, Function, ...)  throw Exception("Exception. No details available in HEADER ONLY Version")
+#define ThorsMessage(Level, ...)                                        \
+do                                                                      \
+{                                                                       \
+    if (Level <= THOR_LOGGING_DEFAULT_LOG_LEVEL) {                      \
+        std::cerr << ThorsAnvil::Utility::buildErrorMessage(__VA_ARGS__);\
+    }                                                                   \
+}                                                                       \
+while (false)
+#else
 #define ThorsLogAndThrowAction(Level, Exception, Scope, Function, ...)  \
 do                                                                      \
 {                                                                       \
@@ -64,6 +87,8 @@ do                                                                      \
 while (false)
 
 #define ThorsMessage(Level, ...)        VLOG_S(Level) << ThorsAnvil::Utility::buildErrorMessage(__VA_ARGS__)
+#endif
+
 
 #define ThorsLogAndThrowFatal(...)      ThorsLogAndThrowAction(FATAL,   ThorsAnvil::Logging::FatalException, __VA_ARGS__)
 #define ThorsLogAndThrowCritical(...)   ThorsLogAndThrowAction(ERROR,   ThorsAnvil::Logging::CriticalException, __VA_ARGS__)

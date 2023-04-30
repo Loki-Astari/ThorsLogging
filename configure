@@ -17188,6 +17188,9 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 # Used by ThorMaker
 # Note: you can push the config file to sub directories in the AC_CONFIG_HEADERS macro (see example)
 # Note: Local Make variables should be placed in Makefile.config.in
+
+printf "%s\n" "#define HEADER_ONLY 0" >>confdefs.h
+
 am__api_version='1.16'
 
 
