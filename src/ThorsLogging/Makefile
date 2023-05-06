@@ -6,6 +6,7 @@ TEST_IGNORE					= loguru.cpp loguru.hpp
 CXXFLAGS					+= -DLOGURU_WITH_STREAMS=1
 
 VERA_PROFILE_loguru.hpp		= ThorsLogging_loguru.hpp
+%/loguru.o:					FILE_WARNING_FLAGS = -Wno-attributes
 
 include $(THORSANVIL_ROOT)/build/tools/Makefile
 
