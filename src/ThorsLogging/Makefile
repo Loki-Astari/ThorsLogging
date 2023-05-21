@@ -1,5 +1,5 @@
 
-THORSANVIL_ROOT				?= $(shell realpath ../../)
+THORSANVIL_ROOT				?= ../..
 
 TARGET						= ThorsLogging.lib
 TEST_IGNORE					= loguru.cpp loguru.hpp
