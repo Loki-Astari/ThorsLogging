@@ -42,6 +42,14 @@ LT_INIT
 # Note: Local Make variables should be placed in Makefile.config.in
 AC_DEFINE([HEADER_ONLY], [0], [Enable to use header only libraries])
 AM_INIT_AUTOMAKE([foreign])
+AH_TOP([
+#ifndef  THORS_LOGGING_CONFIG_H
+#define  THORS_LOGGING_CONFIG_H
+])
+AH_BOTTOM([
+#endif
+])
+
 AC_CONFIG_HEADERS([config.h src/ThorsLogging/ThorsLoggingConfig.h:config.h.in])
 AC_CONFIG_FILES([Makefile.extra Makefile.config:build/autotools/build/Makefile.config.in:Makefile.config.in])
 AC_OUTPUT
