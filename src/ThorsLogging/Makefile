@@ -2,6 +2,7 @@
 THORSANVIL_ROOT				?= $(realpath ../../)
 
 TARGET						= ThorsLogging.lib
+NAMESPACE					= ThorsAnvil::Logging
 TEST_IGNORE					= loguru.cpp loguru.hpp
 CXXFLAGS					+= -DLOGURU_WITH_STREAMS=1
 
