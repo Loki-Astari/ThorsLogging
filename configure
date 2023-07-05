@@ -17355,7 +17355,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
     sedStrip='s/-.*//'
-    UNAME=`uname -s | sed "${sedString}"`
+    UNAME=`uname -s | sed "${sedStrip}"`
     echo "Checking Windows Symbolic Links: ${UNAME}"
     if test "x${UNAME}" = "xMSYS_NT"
 then :
