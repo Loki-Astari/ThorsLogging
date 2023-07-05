@@ -29,6 +29,7 @@ AC_CHECK_LIB([dl],    [dlopen], [], [AC_MSG_ERROR([The build tools needs libdl. 
 # Add support for shared libraries.
 LT_INIT
 
+AX_THOR_FIX_GIT_SYMLINKS_WINDOWS
 
 #
 # Add your defintions in here.

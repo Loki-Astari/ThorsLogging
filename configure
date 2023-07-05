@@ -17354,6 +17354,17 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
+    sedStrip='s/-.*//'
+    UNAME=`uname -s | sed "${sedString}"`
+    if test "x${UNAME}" = "xMSYS_NT"
+then :
+
+        git config --local core.symlinks true
+        find src/ -type f | xargs -I^ git restore --source=HEAD ^
+
+fi
+
+
 #
 # Add your defintions in here.
 # Note there are some predefined macros in build/autotools/m4/
