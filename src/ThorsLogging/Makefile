@@ -5,5 +5,10 @@ TARGET						= ThorsLogging.lib
 NAMESPACE					= ThorsAnvil::Logging
 CXXFLAGS					+= -DLOGURU_WITH_STREAMS=1
 
+
+#
+# This is need to build on Windows
+%/loguru.o:					FILE_WARNING_FLAGS += -Wno-attributes
+
 include $(THORSANVIL_ROOT)/build/tools/Makefile
 
