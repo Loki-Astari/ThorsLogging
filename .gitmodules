@@ -1,5 +1,5 @@
 [submodule ".build"]
-	path = .build
+	path = build
 	url = git@github.com:Loki-Astari/ThorMaker.git
 [submodule "third/loguru"]
 	path = third/loguru
