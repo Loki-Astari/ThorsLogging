@@ -1,6 +1,7 @@
 *.o
 *.lex.cpp
 .*.swp
+*.gcov
 
 unittest
 
