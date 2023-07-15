@@ -1,0 +1,41 @@
+#
+# logru.cpp is an external library so we don't need to validate its style.
+#
+
+set ruleExclusions(L002) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(L006) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(T002) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(T008) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(T011A) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(T019) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(M001) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(M002) {
+    loguru.cpp
+    loguru.hpp
+}
+set ruleExclusions(M003) {
+    loguru.cpp
+    loguru.hpp
+}
+
