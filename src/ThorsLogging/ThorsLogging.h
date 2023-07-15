@@ -15,6 +15,15 @@
 #define Verbosity_ERROR       3
 #define Verbosity_WARNING     4
 #define Verbosity_INFO        5
+#define Verbosity_1           1
+#define Verbosity_2           2
+#define Verbosity_3           3
+#define Verbosity_4           4
+#define Verbosity_5           5
+#define Verbosity_6           6
+#define Verbosity_7           7
+#define Verbosity_8           8
+#define Verbosity_9           9
 #ifndef THOR_LOGGING_DEFAULT_LOG_LEVEL
 #define THOR_LOGGING_DEFAULT_LOG_LEVEL   3
 #endif
