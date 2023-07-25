@@ -6,6 +6,8 @@ AC_CONFIG_AUX_DIR([build/autotools/build])
 
 AX_THOR_FUNC_INIT_BUILD([ThorsLogging], [17], [src/ThorsLogging/ThorsLogging.h])
 
+AX_THOR_FEATURE_HEADER_ONLY_VARIANT([THORS_LOGGING])
+
 AC_CHECK_LIB([dl],    [dlopen], [], [AC_MSG_ERROR([The build tools needs libdl. Please install it.])])
 
 LT_INIT
