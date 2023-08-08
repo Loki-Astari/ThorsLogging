@@ -33,9 +33,9 @@ set ruleExclusions(M001) {
 set ruleExclusions(M002) {
     loguru.cpp
     loguru.hpp
+    ThorsLogging.h
 }
 set ruleExclusions(M003) {
     loguru.cpp
     loguru.hpp
 }
-
