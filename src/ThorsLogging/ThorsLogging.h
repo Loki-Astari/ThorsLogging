@@ -9,10 +9,10 @@
 #endif
 
 #if defined(THORS_LOGGING_HEADER_ONLY) && THORS_LOGGING_HEADER_ONLY == 1
-
+#include <iostream>
 namespace loguru
 {
-    enum NamedVerbosity : Verbosity
+    enum NamedVerbosity : int
     {
         // Used to mark an invalid verbosity. Do not log to this level.
         Verbosity_INVALID = -10, // Never do LOG_F(INVALID)
