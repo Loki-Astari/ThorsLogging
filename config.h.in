@@ -40,12 +40,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Enable to use header only libraries */
-#undef HEADER_ONLY
-
-/* For header only convery to inline */
-#undef HEADER_ONLY_INCLUDE
-
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
@@ -74,6 +68,15 @@
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #undef STDC_HEADERS
+
+/* Enable to use header only libraries */
+#undef THORS_LOGGING_HEADER_ONLY
+
+/* For header only convert to inline */
+#undef THORS_LOGGING_HEADER_ONLY_INCLUDE
+
+/* Name of package for header files */
+#undef THOR_PACKAGE_NAME
 
 /* Version number of package */
 #undef VERSION
