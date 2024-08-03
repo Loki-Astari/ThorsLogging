@@ -4,6 +4,8 @@
 
 #ifndef  THORS_LOGGING_CONFIG_H
 #define  THORS_LOGGING_CONFIG_H
+#ifndef  THORS_PACKAGE_INFO_CONFIG_H
+#define  THORS_PACKAGE_INFO_CONFIG_H
 
     
 
@@ -70,10 +72,8 @@
 #undef STDC_HEADERS
 
 /* Enable to use header only libraries */
-#undef THORS_LOGGING_HEADER_ONLY
 
 /* For header only convert to inline */
-#undef THORS_LOGGING_HEADER_ONLY_INCLUDE
 
 /* Name of package for header files */
 #undef THOR_PACKAGE_NAME
@@ -83,6 +83,16 @@
 
 
 
-#endif
 
     
+#endif
+
+
+/* Enable to use header only libraries */
+#undef THORS_LOGGING_HEADER_ONLY
+
+/* For header only convert to inline */
+#undef THORS_LOGGING_HEADER_ONLY_INCLUDE
+
+
+#endif

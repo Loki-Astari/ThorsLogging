@@ -12,6 +12,6 @@ AC_CHECK_LIB([dl],    [dlopen], [], [AC_MSG_ERROR([The build tools needs libdl. 
 
 LT_INIT
 
-AX_THOR_FUNC_TERM_BUILD([LOGGING], [src/ThorsLogging/ThorsLoggingConfig.h])
+AX_THOR_FUNC_TERM_BUILD([LOGGING], [src/ThorsLogging/ThorsLoggingConfig.h:config.h.in])
 
 AC_OUTPUT
