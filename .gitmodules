@@ -1,6 +1,6 @@
 [submodule ".build"]
 	path = build
-	url = ../ThorMaker.git
+	url = ../../Loki-Astari/ThorMaker.git
 [submodule "third/loguru"]
 	path = third/loguru
-	url = ../loguru.git
+	url = ../../Loki-Astari/loguru.git
