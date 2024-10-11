@@ -129,13 +129,14 @@ while (false)
 #define ThorsLogActionWithPotetialThrow(hasExcept, Exception, Level, Scope, Function, ...)          \
 do                                                                      \
 {                                                                       \
-    std::string message_ThorsLogAndThrowAction =                        \
+    ThorsMessage(Level, Scope, Function, __VA_ARGS__);                  \
+    if constexpr (hasExcept)                                            \
+    {                                                                   \
+        std::string message_ThorsLogAndThrowAction =                    \
                           ThorsAnvil::Utility::buildErrorMessage(       \
                                             Scope,                      \
                                             Function,                   \
                                             __VA_ARGS__);               \
-    ThorsLogOutput(Level, message_ThorsLogAndThrowAction);              \
-    if constexpr (hasExcept) {                                          \
         throw Exception(message_ThorsLogAndThrowAction);                \
     }                                                                   \
 }                                                                       \
