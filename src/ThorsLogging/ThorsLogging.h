@@ -51,7 +51,6 @@ namespace loguru
         Verbosity_MAX     = +9,
     };
 
-    NamedVerbosity g_stderr_verbosity = THOR_LOGGING_DEFAULT_LOG_LEVEL;
 }
 
 #else
@@ -111,7 +110,7 @@ class ConvertToVoid
 };
 
 #define VLOG_IF_S(verbosity, cond)                                                                 \
-    ((verbosity) > loguru::g_stderr_verbosity || (cond) == false)                                  \
+    ((verbosity) > THOR_LOGGING_DEFAULT_LOG_LEVEL || (cond) == false)                              \
         ? (void)0                                                                                  \
         : ConvertToVoid{} & std::cerr
 #define VLOG_S(verbosity)              VLOG_IF_S(verbosity, true)
@@ -119,7 +118,7 @@ class ConvertToVoid
 #define ThorsLogOutput(Level, message)                                  \
 do                                                                      \
 {                                                                       \
-    if ((loguru::Verbosity_ ## Level) <= oguru::g_stderr_verbosity) {   \
+    if ((loguru::Verbosity_ ## Level) <= THOR_LOGGING_DEFAULT_LOG_LEVEL) {   \
         std::cerr << message;                                           \
     }                                                                   \
 }                                                                       \
