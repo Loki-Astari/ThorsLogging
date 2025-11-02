@@ -68,7 +68,7 @@ namespace ThorsAnvil
 
     // This is for data/application corruption that requires the
     // application to immediately quit.
-    class FatalException: public std::runtime_error
+    class LogFatalException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -84,7 +84,7 @@ namespace ThorsAnvil
     // Note: This does not mean there has been data corruptions so we
     //       can potentially continue. The application writer must
     //       make that determination.
-    class CriticalException: public std::runtime_error
+    class LogErrorException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -92,7 +92,22 @@ namespace ThorsAnvil
     // This is for situations where you don't want to happen
     // but is caused because the input data does not conform
     // to expect patterns.
-    class LogicalException: public std::runtime_error
+    class LogWarningException: public std::runtime_error
+    {
+        public:
+            using std::runtime_error::runtime_error;
+    };
+    class LogInfoException: public std::runtime_error
+    {
+        public:
+            using std::runtime_error::runtime_error;
+    };
+    class LogDebugException: public std::runtime_error
+    {
+        public:
+            using std::runtime_error::runtime_error;
+    };
+    class LogAllException: public std::runtime_error
     {
         public:
             using std::runtime_error::runtime_error;
@@ -152,25 +167,20 @@ while (false)
 #define ThorsLogAndThrowAction(...)     ThorsLogActionWithPotetialThrow(true, __VA_ARGS__)
 #define ThorsLogAction(...)             ThorsLogActionWithPotetialThrow(false, std::runtime_error, __VA_ARGS__)
 
-#define ThorsLogAndThrowFatal(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::FatalException,    FATAL,   __VA_ARGS__)
-#define ThorsLogAndThrowCritical(...)   ThorsLogAndThrowAction(ThorsAnvil::Logging::CriticalException, ERROR,   __VA_ARGS__)
-#define ThorsLogAndThrowLogical(...)    ThorsLogAndThrowAction(ThorsAnvil::Logging::LogicalException,  WARNING, __VA_ARGS__)
-#define ThorsLogAndThrowWarning(...)    ThorsLogAndThrowAction(ThorsAnvil::Logging::LogicalException,  WARNING, __VA_ARGS__)
-#define ThorsLogAndThrowInfo(...)       ThorsLogAndThrowAction(ThorsAnvil::Logging::LogicalException,  INFO,    __VA_ARGS__)
-#define ThorsLogAndThrowCust(L, ...)    ThorsLogAndThrowAction(std::runtime_error,                     L,       __VA_ARGS__)
-#define ThorsLogAndThrow(...)           ThorsLogAndThrowAction(std::runtime_error,                     2,       __VA_ARGS__)
+#define ThorsLogAndThrowFatal(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogFatalException,    FATAL,   __VA_ARGS__)
+#define ThorsLogAndThrowError(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogErrorException,    ERROR,   __VA_ARGS__)
+#define ThorsLogAndThrowWarning(...)    ThorsLogAndThrowAction(ThorsAnvil::Logging::LogWarningException,  WARNING, __VA_ARGS__)
+#define ThorsLogAndThrowInfo(...)       ThorsLogAndThrowAction(ThorsAnvil::Logging::LogInfoException,     INFO,    __VA_ARGS__)
+#define ThorsLogAndThrowDebug(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogDebugException,    6,       __VA_ARGS__)
+#define ThorsLogAndThrowTrace(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogTraceException,    8,       __VA_ARGS__)
+#define ThorsLogAndThrowAll(...)        ThorsLogAndThrowAction(ThorsAnvil::Logging::LogAllException,      9,       __VA_ARGS__)
 #define ThorsLogFatal(...)              ThorsLogAction(FATAL,   __VA_ARGS__)
-#define ThorsLogCritical(...)           ThorsLogAction(ERROR,   __VA_ARGS__)
-#define ThorsLogLogical(...)            ThorsLogAction(WARNING, __VA_ARGS__)
+#define ThorsLogError(...)              ThorsLogAction(ERROR,   __VA_ARGS__)
 #define ThorsLogWarning(...)            ThorsLogAction(WARNING, __VA_ARGS__)
 #define ThorsLogInfo(...)               ThorsLogAction(INFO,    __VA_ARGS__)
-#define ThorsLog(...)                   ThorsLogAction(2,       __VA_ARGS__)
-// These are off by default.
-// You need to explicitly change the logging level higher for these to turn up in the logs.
 #define ThorsLogDebug(...)              ThorsLogAction(6,       __VA_ARGS__)
 #define ThorsLogTrace(...)              ThorsLogAction(8,       __VA_ARGS__)
 #define ThorsLogAll(...)                ThorsLogAction(9,       __VA_ARGS__)
-#define ThorsLogCust(L, ...)            ThorsLogAction(L,       __VA_ARGS__)
 
 #define ThorsCatchMessage(S, F, e)      ThorsMessage(2, S, F, "Caught Exception: ", e)
 #define ThorsRethrowMessage(S, F, e)    ThorsMessage(2, S, F, "ReThrow Exception: ",e)
