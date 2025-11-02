@@ -61,61 +61,6 @@ namespace loguru
 #include <string>
 
 
-namespace ThorsAnvil
-{
-    namespace Logging
-    {
-
-    // This is for data/application corruption that requires the
-    // application to immediately quit.
-    class LogFatalException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-    // This is for situations that "should not" happen.
-    // Use this exception for code paths that should not be reachable.
-    //
-    // This will help find issues that can be corrected by unit tests.
-    // But occasionally will happen in production. You should only
-    // catch this type of error at an action type level to abandon the
-    // action.
-    //
-    // Note: This does not mean there has been data corruptions so we
-    //       can potentially continue. The application writer must
-    //       make that determination.
-    class LogErrorException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-    // This is for situations where you don't want to happen
-    // but is caused because the input data does not conform
-    // to expect patterns.
-    class LogWarningException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-    class LogInfoException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-    class LogDebugException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-    class LogAllException: public std::runtime_error
-    {
-        public:
-            using std::runtime_error::runtime_error;
-    };
-
-    }
-}
-
 #if defined(THORS_LOGGING_HEADER_ONLY) && THORS_LOGGING_HEADER_ONLY == 1
 
 class ConvertToVoid
@@ -167,13 +112,13 @@ while (false)
 #define ThorsLogAndThrowAction(...)     ThorsLogActionWithPotetialThrow(true, __VA_ARGS__)
 #define ThorsLogAction(...)             ThorsLogActionWithPotetialThrow(false, std::runtime_error, __VA_ARGS__)
 
-#define ThorsLogAndThrowFatal(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogFatalException,    FATAL,   __VA_ARGS__)
-#define ThorsLogAndThrowError(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogErrorException,    ERROR,   __VA_ARGS__)
-#define ThorsLogAndThrowWarning(...)    ThorsLogAndThrowAction(ThorsAnvil::Logging::LogWarningException,  WARNING, __VA_ARGS__)
-#define ThorsLogAndThrowInfo(...)       ThorsLogAndThrowAction(ThorsAnvil::Logging::LogInfoException,     INFO,    __VA_ARGS__)
-#define ThorsLogAndThrowDebug(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogDebugException,    6,       __VA_ARGS__)
-#define ThorsLogAndThrowTrace(...)      ThorsLogAndThrowAction(ThorsAnvil::Logging::LogTraceException,    8,       __VA_ARGS__)
-#define ThorsLogAndThrowAll(...)        ThorsLogAndThrowAction(ThorsAnvil::Logging::LogAllException,      9,       __VA_ARGS__)
+#define ThorsLogAndThrowFatal(E, ...)   ThorsLogAndThrowAction(E,    FATAL, __VA_ARGS__)
+#define ThorsLogAndThrowError(E, ...)   ThorsLogAndThrowAction(E,    ERROR, __VA_ARGS__)
+#define ThorsLogAndThrowWarning(E, ...) ThorsLogAndThrowAction(E,  WARNING, __VA_ARGS__)
+#define ThorsLogAndThrowInfo(E, ...)    ThorsLogAndThrowAction(E,     INFO, __VA_ARGS__)
+#define ThorsLogAndThrowDebug(E, ...)   ThorsLogAndThrowAction(E,        6, __VA_ARGS__)
+#define ThorsLogAndThrowTrace(E, ...)   ThorsLogAndThrowAction(E,        8, __VA_ARGS__)
+#define ThorsLogAndThrowAll(E, ...)     ThorsLogAndThrowAction(E,        9, __VA_ARGS__)
 #define ThorsLogFatal(...)              ThorsLogAction(FATAL,   __VA_ARGS__)
 #define ThorsLogError(...)              ThorsLogAction(ERROR,   __VA_ARGS__)
 #define ThorsLogWarning(...)            ThorsLogAction(WARNING, __VA_ARGS__)
