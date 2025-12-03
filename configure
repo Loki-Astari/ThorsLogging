@@ -19202,6 +19202,16 @@ fi
     pushd third
     if [ $? == 0 ]; then
         for third in $(ls); do
+
+    export BUILDING_${third}=1
+
+printf "%s\n" "#define THOR_PACKAGE_NAME \${third}" >>confdefs.h
+
+    THOR_PACKAGE_NAME=${third}
+
+
+        done
+        for third in $(ls); do
             echo
             echo
             echo "Building Third Party: ${third}"
