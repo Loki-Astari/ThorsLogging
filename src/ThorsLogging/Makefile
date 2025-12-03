@@ -1,4 +1,4 @@
-
+CONFIG_NAME					= ThorsLogging
 THORSANVIL_ROOT				?= $(realpath ../../)
 
 TARGET						= ThorsLogging.lib
