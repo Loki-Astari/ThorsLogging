@@ -144,6 +144,9 @@ class ThorsLogTemp
         ThorsLogTemp(loguru::NamedVerbosity level)
             : ThorsLogTemp(static_cast<int>(level))
         {}
+#if defined(THORS_LOGGING_HEADER_ONLY) && THORS_LOGGING_HEADER_ONLY == 1
+        ThorsLogTemp(int) {/*header only does nothing*/}
+#else
         ThorsLogTemp(int level)
         {
             oldLevel = loguru::g_stderr_verbosity;
@@ -153,6 +156,7 @@ class ThorsLogTemp
         {
             loguru::g_stderr_verbosity = oldLevel;
         }
+#endif
 };
 
 #endif
