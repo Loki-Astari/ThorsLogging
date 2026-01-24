@@ -1,8 +1,9 @@
 CONFIG_NAME					= ThorsLogging
 THORSANVIL_ROOT				?= $(realpath ../../)
-
 TARGET						= ThorsLogging.lib
 NAMESPACE					= ThorsAnvil::Logging
+
+
 CXXFLAGS					+= -DLOGURU_WITH_STREAMS=1
 
 
