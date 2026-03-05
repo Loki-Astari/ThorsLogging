@@ -2,6 +2,8 @@
 
 ![ThorsLogging](img/ThorsLogging.jpg)
 
+**Online documentation:** https://loki-astari.github.io/ThorsAnvil/ThorsLogging.html
+
 ThorsLogging provides a very thin wrapper over [loguru](https://github.com/emilk/loguru).
 
 Logging commands only do work if they are lower (or equal) to the current logging level. This is contralled via the global:
