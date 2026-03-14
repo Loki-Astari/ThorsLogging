@@ -12,6 +12,7 @@ profile/
 report/
 vera/
 makedependency/
+buildmeta/
 build
 
 makefile_tmp
