@@ -56,7 +56,6 @@ namespace loguru
 #else
 #include "loguru.hpp"
 #endif
-#include "ThorsIOUtil/Utility.h"
 #include <stdexcept>
 #include <string>
 
@@ -86,11 +85,47 @@ while (false)
 
 #else
 
+#define COUNT(...)              COUNT_(0, __VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, Ignore)
+#define COUNT_(I20, I19, I18, I17, I16, I15, I14, I13, I12, I11, I10, I9, I8, I7, I6, I5, I4, I3, I2, I1, I0, count, ...)                   count
+
+#define STREAM_PARAM(...)           STREAM_PARAM_N(COUNT(__VA_ARGS__), __VA_ARGS__)
+#define STREAM_PARAM_N(N, ...)      STREAM_PARAM_N_(N, __VA_ARGS__)
+#define STREAM_PARAM_N_(N, ...)     STREAM_PARAM_ ## N(__VA_ARGS__)
+#define STREAM_PARAM_1(Val)         Val
+#define STREAM_PARAM_2(Val, ...)    Val << STREAM_PARAM_1(__VA_ARGS__)
+#define STREAM_PARAM_3(Val, ...)    Val << STREAM_PARAM_2(__VA_ARGS__)
+#define STREAM_PARAM_4(Val, ...)    Val << STREAM_PARAM_3(__VA_ARGS__)
+#define STREAM_PARAM_5(Val, ...)    Val << STREAM_PARAM_4(__VA_ARGS__)
+#define STREAM_PARAM_6(Val, ...)    Val << STREAM_PARAM_5(__VA_ARGS__)
+#define STREAM_PARAM_7(Val, ...)    Val << STREAM_PARAM_6(__VA_ARGS__)
+#define STREAM_PARAM_8(Val, ...)    Val << STREAM_PARAM_7(__VA_ARGS__)
+#define STREAM_PARAM_9(Val, ...)    Val << STREAM_PARAM_8(__VA_ARGS__)
+#define STREAM_PARAM_10(Val, ...)   Val << STREAM_PARAM_9(__VA_ARGS__)
+#define STREAM_PARAM_11(Val, ...)   Val << STREAM_PARAM_10(__VA_ARGS__)
+#define STREAM_PARAM_12(Val, ...)   Val << STREAM_PARAM_11(__VA_ARGS__)
+#define STREAM_PARAM_13(Val, ...)   Val << STREAM_PARAM_12(__VA_ARGS__)
+#define STREAM_PARAM_14(Val, ...)   Val << STREAM_PARAM_13(__VA_ARGS__)
+#define STREAM_PARAM_15(Val, ...)   Val << STREAM_PARAM_14(__VA_ARGS__)
+#define STREAM_PARAM_16(Val, ...)   Val << STREAM_PARAM_15(__VA_ARGS__)
+#define STREAM_PARAM_17(Val, ...)   Val << STREAM_PARAM_16(__VA_ARGS__)
+#define STREAM_PARAM_18(Val, ...)   Val << STREAM_PARAM_17(__VA_ARGS__)
+#define STREAM_PARAM_19(Val, ...)   Val << STREAM_PARAM_18(__VA_ARGS__)
+#define STREAM_PARAM_20(Val, ...)   Val << STREAM_PARAM_19(__VA_ARGS__)
+
+#define ThorsAnvilUtilitybuildErrorMessage(c, m, ...)  STREAM_PARAM("id: ", getUniqueErrorIdX(), " ", c, "::", m, ": ", __VA_ARGS__)
+
+inline
+std::size_t getUniqueErrorIdX()
+{
+    static std::size_t  errorMessageId = 0;
+    return errorMessageId++;
+}
+
 #define ThorsLogOutput(Level, message)  LOG_F(Level, "%s", message_ThorsLogAndThrowAction.c_str())
 
 #endif
 
-#define ThorsMessage(Level, ...)        VLOG_S(loguru::Verbosity_ ## Level) << ThorsAnvil::Utility::buildErrorMessage(__VA_ARGS__)
+#define ThorsMessage(Level, ...)        VLOG_S(loguru::Verbosity_ ## Level) << ThorsAnvilUtilitybuildErrorMessage(__VA_ARGS__)
 
 
 #define ThorsLogActionWithPotetialThrow(hasExcept, Exception, Level, Scope, Function, ...)          \
@@ -99,12 +134,13 @@ do                                                                      \
     ThorsMessage(Level, Scope, Function, __VA_ARGS__);                  \
     if constexpr (hasExcept)                                            \
     {                                                                   \
-        std::string message_ThorsLogAndThrowAction =                    \
-                          ThorsAnvil::Utility::buildErrorMessage(       \
+        std::stringstream message_ThorsLogAndThrowAction;               \
+        message_ThorsLogAndThrowAction <<                               \
+                          ThorsAnvilUtilitybuildErrorMessage(           \
                                             Scope,                      \
                                             Function,                   \
                                             __VA_ARGS__);               \
-        throw Exception(message_ThorsLogAndThrowAction);                \
+        throw Exception(message_ThorsLogAndThrowAction.str());          \
     }                                                                   \
 }                                                                       \
 while (false)
@@ -158,5 +194,84 @@ class ThorsLogTemp
         }
 #endif
 };
+
+
+namespace ThorsAnvil::Utility
+{
+
+inline
+std::string errnoToName()
+{
+    switch (errno)
+    {
+#define  THOR_CASE(x)  case x: return #x " "
+        THOR_CASE( EACCES );
+        THOR_CASE( EADDRINUSE );
+        THOR_CASE( EADDRNOTAVAIL );
+        THOR_CASE( EAFNOSUPPORT );
+        THOR_CASE( EAGAIN );
+        // TODO );
+        //THOR_CASE( EWOULDBLOCK );
+        THOR_CASE( EBADF );
+        THOR_CASE( ECONNABORTED );
+        THOR_CASE( ECONNRESET );
+        THOR_CASE( EDESTADDRREQ );
+#if !defined(__WINNT) && !defined(_WIN32) && !defined(_WIN64)
+        THOR_CASE( EDQUOT );
+#endif
+        THOR_CASE( EEXIST );
+        THOR_CASE( EFAULT );
+        THOR_CASE( EFBIG );
+        THOR_CASE( EINTR );
+        THOR_CASE( EINVAL );
+        THOR_CASE( EIO );
+        THOR_CASE( EISDIR );
+        THOR_CASE( ELOOP );
+        THOR_CASE( EMFILE );
+        THOR_CASE( ENAMETOOLONG );
+        THOR_CASE( ENETDOWN );
+        THOR_CASE( ENETUNREACH );
+        THOR_CASE( ENFILE );
+        THOR_CASE( ENOBUFS );
+        THOR_CASE( ENOENT );
+        THOR_CASE( ENOMEM );
+        THOR_CASE( ENOSPC );
+        THOR_CASE( ENOTCONN );
+        THOR_CASE( ENOTDIR );
+        THOR_CASE( ENOTSOCK );
+        THOR_CASE( ENXIO );
+        THOR_CASE( EOPNOTSUPP );
+        THOR_CASE( EPIPE );
+        THOR_CASE( EPROTONOSUPPORT );
+        THOR_CASE( EPROTOTYPE );
+        THOR_CASE( EROFS );
+        THOR_CASE( ESPIPE );
+        THOR_CASE( ETIMEDOUT );
+        THOR_CASE( EALREADY );
+        THOR_CASE( ECONNREFUSED );
+        THOR_CASE( EHOSTUNREACH );
+        THOR_CASE( EINPROGRESS );
+        THOR_CASE( EISCONN );
+#undef THOR_CASE
+    }
+    return "Unknown: ";
+}
+
+// @function
+inline
+std::string systemErrorMessage()
+{
+    std::string result = errnoToName();
+#if !defined(_WIN32) && !defined(_WIN64)
+    result += std::strerror(errno);
+#else
+    static char buffer[1000];
+    strerror_s(buffer, 1000, errno);
+    result += buffer;
+#endif
+    return result;
+}
+
+}
 
 #endif
