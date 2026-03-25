@@ -2,6 +2,7 @@
 #define THORSANVIL_LOGGING_THORS_LOGGING_H
 
 #include "ThorsLoggingConfig.h"
+#include <cstring>
 
 
 #ifndef LOGURU_WITH_STREAMS
