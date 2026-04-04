@@ -86,6 +86,10 @@ while (false)
 
 #else
 
+#define ThorsLogOutput(Level, message)  LOG_F(Level, "%s", message_ThorsLogAndThrowAction.c_str())
+
+#endif
+
 #define COUNT(...)              COUNT_(0, __VA_ARGS__, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, Ignore)
 #define COUNT_(I20, I19, I18, I17, I16, I15, I14, I13, I12, I11, I10, I9, I8, I7, I6, I5, I4, I3, I2, I1, I0, count, ...)                   count
 
@@ -122,9 +126,6 @@ std::size_t getUniqueErrorIdX()
     return errorMessageId++;
 }
 
-#define ThorsLogOutput(Level, message)  LOG_F(Level, "%s", message_ThorsLogAndThrowAction.c_str())
-
-#endif
 
 #define ThorsMessage(Level, ...)        VLOG_S(loguru::Verbosity_ ## Level) << ThorsAnvilUtilitybuildErrorMessage(__VA_ARGS__)
 
