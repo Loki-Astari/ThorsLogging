@@ -128,13 +128,17 @@ std::size_t getUniqueErrorIdX()
 
 
 #define ThorsMessage(Level, ...)        VLOG_S(loguru::Verbosity_ ## Level) << ThorsAnvilUtilitybuildErrorMessage(__VA_ARGS__)
+#define ThorsMessageStr(Level, str)     VLOG_S(loguru::Verbosity_ ## Level) << str
 
 
 #define ThorsLogActionWithPotetialThrow(hasExcept, Exception, Level, Scope, Function, ...)          \
 do                                                                      \
 {                                                                       \
-    ThorsMessage(Level, Scope, Function, __VA_ARGS__);                  \
-    if constexpr (hasExcept)                                            \
+    if constexpr (!hasExcept)                                           \
+    {                                                                   \
+        ThorsMessage(Level, Scope, Function, __VA_ARGS__);              \
+    }                                                                   \
+    else                                                                \
     {                                                                   \
         std::stringstream message_ThorsLogAndThrowAction;               \
         message_ThorsLogAndThrowAction <<                               \
@@ -142,6 +146,7 @@ do                                                                      \
                                             Scope,                      \
                                             Function,                   \
                                             __VA_ARGS__);               \
+        ThorsMessageStr(Level, message_ThorsLogAndThrowAction.str());   \
         throw Exception(message_ThorsLogAndThrowAction.str());          \
     }                                                                   \
 }                                                                       \
