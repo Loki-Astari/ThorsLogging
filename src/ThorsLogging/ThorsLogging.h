@@ -89,7 +89,7 @@ class ThorsLoggingLevel
 {
     static loguru::Verbosity& logLevel()
     {
-        static loguru::Verbosity stderr_verbosity = Verbosity_5;
+        static loguru::Verbosity stderr_verbosity = loguru::Verbosity_5;
         return stderr_verbosity;
     }
 };
@@ -204,7 +204,7 @@ class ThorsLogTemp
         {}
         ThorsLogTemp(int level)
         {
-            oldLevel = ThorsLogLevelGet()
+            oldLevel = ThorsLogLevelGet();
             ThorsLogLevelSet(level);
         }
         ~ThorsLogTemp()
