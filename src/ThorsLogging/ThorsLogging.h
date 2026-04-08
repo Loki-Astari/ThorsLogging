@@ -53,8 +53,6 @@ namespace loguru
         Verbosity_MAX     = +9,
     };
 
-    Verbosity   g_stderr_verbosity = Verbosity_5;
-
 }
 
 #else
@@ -87,9 +85,26 @@ do                                                                      \
 }                                                                       \
 while (false)
 
+class ThorsLoggingLevel
+{
+    static loguru::Verbosity& logLevel()
+    {
+        static loguru::Verbosity stderr_verbosity = Verbosity_5;
+        return stderr_verbosity;
+    }
+};
+
+
+#define ThorsLogLevelSet(level)         ThorsLoggingLevel::logLevel() = level
+#define ThorsLogLevel(level)            ThorsLoggingLevel::logLevel() = ThorsLogLevelItem(level)
+#define ThorsLogLevelGet()              ThorsLoggingLevel::logLevel()
+
 #else
 
 #define ThorsLogOutput(Level, message)  LOG_F(Level, "%s", message_ThorsLogAndThrowAction.c_str())
+#define ThorsLogLevelSet(level)         loguru::g_stderr_verbosity = level
+#define ThorsLogLevel(level)            loguru::g_stderr_verbosity = ThorsLogLevelItem(level)
+#define ThorsLogLevelGet()              loguru::g_stderr_verbosity
 
 #endif
 
@@ -176,9 +191,6 @@ while (false)
 #define ThorsLogAll(...)                ThorsLogAction(9,       __VA_ARGS__)
 
 #define ThorsLogLevelItem(level)        loguru::Verbosity_ ## level
-#define ThorsLogLevelSet(level)         loguru::g_stderr_verbosity = level
-#define ThorsLogLevel(level)            loguru::g_stderr_verbosity = ThorsLogLevelItem(level)
-#define ThorsLogLevelGet()              loguru::g_stderr_verbosity
 
 #define ThorsCatchMessage(S, F, e)      ThorsMessage(2, S, F, "Caught Exception: ", e)
 #define ThorsRethrowMessage(S, F, e)    ThorsMessage(2, S, F, "ReThrow Exception: ",e)
@@ -190,19 +202,15 @@ class ThorsLogTemp
         ThorsLogTemp(loguru::NamedVerbosity level)
             : ThorsLogTemp(static_cast<int>(level))
         {}
-#if defined(THORS_LOGGING_HEADER_ONLY) && THORS_LOGGING_HEADER_ONLY == 1
-        ThorsLogTemp(int) {/*header only does nothing*/}
-#else
         ThorsLogTemp(int level)
         {
-            oldLevel = loguru::g_stderr_verbosity;
-            loguru::g_stderr_verbosity = level;
+            oldLevel = ThorsLogLevelGet()
+            ThorsLogLevelSet(level);
         }
         ~ThorsLogTemp()
         {
-            loguru::g_stderr_verbosity = oldLevel;
+            ThorsLogLevelSet(oldLevel);
         }
-#endif
 };
 
 
