@@ -87,6 +87,7 @@ while (false)
 
 class ThorsLoggingLevel
 {
+    public:
     static loguru::Verbosity& logLevel()
     {
         static loguru::Verbosity stderr_verbosity = loguru::Verbosity_5;
