@@ -18,6 +18,7 @@
 #include <iostream>
 namespace loguru
 {
+    using Verbosity = int;
     enum NamedVerbosity : int
     {
         // Used to mark an invalid verbosity. Do not log to this level.
@@ -51,6 +52,8 @@ namespace loguru
         // Do not use higher verbosity levels, as that will make grepping log files harder.
         Verbosity_MAX     = +9,
     };
+
+    Verbosity   g_stderr_verbosity = Verbosity_5;
 
 }
 
