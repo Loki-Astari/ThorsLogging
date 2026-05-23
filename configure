@@ -3856,7 +3856,7 @@ then :
   enableval=$enable_dark_mode;
 fi
 
-    if test "x$enable_dark-mode" != "xyes"
+    if test "x$enable_dark-mode" == "xyes"
 then :
 
             DARK_MODE="ON"
